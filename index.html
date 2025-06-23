@@ -1,7 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sitzplan – ALL YOU CAN MEET</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; max-width: 600px; margin: auto; }
+    #result { margin-top: 2rem; font-size: 1.2rem; }
+  </style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+  <h1>Sitzplatz finden</h1>
+  <p>Gib deinen Namen ein:</p>
+  <input type="text" id="nameInput" placeholder="Vorname Nachname" />
+  <button onclick="findPerson()">Anzeigen</button>
+  <div id="result"></div>
+
+  <script src="script.js"></script>
 </body>
 </html>
