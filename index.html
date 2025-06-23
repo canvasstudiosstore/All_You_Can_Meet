@@ -9,11 +9,13 @@
   </style>
 </head>
 <body>
-  <h1>Sitzplatz finden</h1>
-  <p>Gib deinen Namen ein:</p>
-  <input type="text" id="nameInput" placeholder="Vorname Nachname" />
-  <button onclick="findPerson()">Anzeigen</button>
-  <div id="result"></div>
+<h1>Sitzplatz finden</h1>
+<p>Gib deine E-Mail-Adresse ein:</p>
+<input list="emailList" id="emailInput" placeholder="name@example.com" />
+<datalist id="emailList"></datalist>
+<button onclick="findPerson()">Anzeigen</button>
+<div id="result"></div>
+
 
   <script src="script.js"></script>
 </body>

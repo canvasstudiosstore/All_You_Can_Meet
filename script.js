@@ -1,23 +1,39 @@
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/1vTOtSPwhzF5_ckYPhaOVoSHFninJhfqqGfqYdUVcHNg/gviz/tq?tqx=out:json";
 
+let data = [];
+
 async function fetchSheetData() {
   const res = await fetch(SHEET_URL);
   const text = await res.text();
   const json = JSON.parse(text.substr(47).slice(0, -2));
 
-  return json.table.rows.map(row => ({
-    name: row.c[0]?.v,
-    gang1: row.c[1]?.v,
-    gang2: row.c[2]?.v,
-    gang3: row.c[3]?.v,
+  data = json.table.rows.map(row => ({
+    email: row.c[0]?.v?.toLowerCase(),
+    name: row.c[1]?.v,
+    gang1: row.c[2]?.v,
+    gang2: row.c[3]?.v,
+    gang3: row.c[4]?.v,
   }));
+
+  setupAutocomplete();
 }
 
-async function findPerson() {
-  const input = document.getElementById("nameInput").value.trim().toLowerCase();
-  const data = await fetchSheetData();
-  const person = data.find(p => p.name && p.name.toLowerCase() === input);
+function setupAutocomplete() {
+  const input = document.getElementById("emailInput");
+  const datalist = document.getElementById("emailList");
+  datalist.innerHTML = "";
+
+  data.forEach(p => {
+    const option = document.createElement("option");
+    option.value = p.email;
+    datalist.appendChild(option);
+  });
+}
+
+function findPerson() {
+  const input = document.getElementById("emailInput").value.trim().toLowerCase();
   const resultDiv = document.getElementById("result");
+  const person = data.find(p => p.email === input);
 
   if (person) {
     resultDiv.innerHTML = `
@@ -29,6 +45,9 @@ async function findPerson() {
       </ul>
     `;
   } else {
-    resultDiv.innerHTML = "<p style='color:red'>Name nicht gefunden. Bitte prüfe die Schreibweise.</p>";
+    resultDiv.innerHTML = "<p style='color:red'>E-Mail nicht gefunden. Bitte prüfe die Eingabe.</p>";
   }
 }
+
+// Daten laden beim Start
+fetchSheetData();
