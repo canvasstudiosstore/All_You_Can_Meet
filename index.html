@@ -4,8 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ALL YOU CAN MEET – Sitzplan</title>
-<link rel="icon" type="image/png" href="https://wj-duh.de/admin/layout/WJ-2021/favicon-32x32.png?" />
-
   <style>
     body {
       font-family: sans-serif;
@@ -21,11 +19,12 @@
 
     header {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
       justify-content: center;
-      gap: 1rem;
+      gap: 2rem;
       margin-bottom: 1.5rem;
+      flex-wrap: wrap;
     }
 
     .logo-block {
@@ -34,12 +33,14 @@
       border-radius: 8px;
     }
 
-    .logo-block img {
-      height: 60px;
+    .wj-logo {
+      height: 45px;
+      width: auto;
     }
 
-    header a img:last-child {
-      height: 70px !important;
+    .rohrmeisterei-logo {
+      height: 85px;
+      width: auto;
     }
 
     .image-section {
@@ -112,10 +113,10 @@
 <body>
   <header>
     <a href="https://wj-duh.de/" class="logo-block" target="_blank">
-      <img src="https://wj-duh.de/files/WJ-Dortmund_Logo_weiss.svg" alt="Wirtschaftsjunioren Logo" />
+      <img class="wj-logo" src="https://wj-duh.de/files/WJ-Dortmund_Logo_weiss.svg" alt="Wirtschaftsjunioren Logo" />
     </a>
     <a href="https://www.rohrmeisterei-schwerte.de" target="_blank">
-      <img src="https://www.rohrmeisterei-schwerte.de/files/framework/images/logo@2x.png" alt="Rohrmeisterei Logo" />
+      <img class="rohrmeisterei-logo" src="https://www.rohrmeisterei-schwerte.de/files/framework/images/logo@2x.png" alt="Rohrmeisterei Logo" />
     </a>
   </header>
 
