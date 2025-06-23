@@ -2,37 +2,54 @@ const SHEET_URL = "https://docs.google.com/spreadsheets/d/1vTOtSPwhzF5_ckYPhaOVo
 
 let data = [];
 
+window.addEventListener("DOMContentLoaded", () => {
+  fetchSheetData();
+});
+
 async function fetchSheetData() {
-  const res = await fetch(SHEET_URL);
-  const text = await res.text();
-  const json = JSON.parse(text.substr(47).slice(0, -2));
+  try {
+    const res = await fetch(SHEET_URL);
+    const text = await res.text();
+    const json = JSON.parse(text.substr(47).slice(0, -2));
 
-  data = json.table.rows.map(row => ({
-    email: row.c[0]?.v?.toLowerCase(),
-    name: row.c[1]?.v,
-    gang1: row.c[2]?.v,
-    gang2: row.c[3]?.v,
-    gang3: row.c[4]?.v,
-  }));
+    data = json.table.rows.map(row => ({
+      email: row.c[0]?.v?.toLowerCase(),
+      name: row.c[1]?.v,
+      gang1: row.c[2]?.v,
+      gang2: row.c[3]?.v,
+      gang3: row.c[4]?.v,
+    }));
 
-  setupAutocomplete();
+    setupAutocomplete();
+  } catch (error) {
+    console.error("Fehler beim Laden der Daten:", error);
+  }
 }
 
 function setupAutocomplete() {
   const input = document.getElementById("emailInput");
   const datalist = document.getElementById("emailList");
+
+  if (!input || !datalist) return;
+
   datalist.innerHTML = "";
 
   data.forEach(p => {
-    const option = document.createElement("option");
-    option.value = p.email;
-    datalist.appendChild(option);
+    if (p.email) {
+      const option = document.createElement("option");
+      option.value = p.email;
+      datalist.appendChild(option);
+    }
   });
 }
 
 function findPerson() {
-  const input = document.getElementById("emailInput").value.trim().toLowerCase();
+  const inputElement = document.getElementById("emailInput");
   const resultDiv = document.getElementById("result");
+
+  if (!inputElement || !resultDiv) return;
+
+  const input = inputElement.value.trim().toLowerCase();
   const person = data.find(p => p.email === input);
 
   if (person) {
@@ -48,6 +65,4 @@ function findPerson() {
     resultDiv.innerHTML = "<p style='color:red'>E-Mail nicht gefunden. Bitte prüfe die Eingabe.</p>";
   }
 }
-
-// Daten laden beim Start
-fetchSheetData();
+window.addEventListener("DOMContentLoaded", fetchSheetData);
