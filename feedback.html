@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Feedback – ALL YOU CAN MEET</title>
+  <title>Feedback zum ALL YOU CAN MEET Event</title>
   <style>
     body {
       font-family: sans-serif;
@@ -11,12 +11,15 @@
       padding: 1rem;
       background: #f5f5f5;
       color: #333;
-      max-width: 100%;
+      max-width: 700px;
       box-sizing: border-box;
       min-height: 100vh;
-      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
-
     header {
       display: flex;
       flex-direction: row;
@@ -42,67 +45,76 @@
       height: 85px;
       width: auto;
     }
-
-    h1 {
-      text-align: center;
-    }
-
     form {
-      max-width: 600px;
-      margin: 0 auto;
       background: white;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      flex-grow: 1;
     }
-
     label {
       display: block;
       margin-top: 1rem;
+      font-weight: bold;
     }
-
-    input[type="text"], textarea, select {
+    label.required::after {
+      content: " *";
+      color: red;
+    }
+    select, textarea {
       width: 100%;
       padding: 0.5rem;
-      margin-top: 0.25rem;
+      margin-top: 0.3rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
       font-size: 1rem;
       box-sizing: border-box;
     }
-
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
     button {
       margin-top: 1.5rem;
       background: #0066cc;
       color: white;
-      padding: 0.75rem 1.5rem;
       border: none;
+      padding: 0.8rem 1.5rem;
       border-radius: 5px;
       font-size: 1rem;
       cursor: pointer;
     }
-
-    .back-link {
-      display: block;
-      text-align: center;
-      margin-top: 2rem;
-      text-decoration: none;
-      color: #0066cc;
-      font-size: 1rem;
+    button.back-button {
+      background: #555;
+      margin-left: 1rem;
     }
-
+    .button-row {
+      display: flex;
+      justify-content: flex-start;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .success-message {
+      margin-top: 1rem;
+      color: green;
+      font-weight: bold;
+      text-align: center;
+    }
+    .error-message {
+      margin-top: 1rem;
+      color: red;
+      font-weight: bold;
+      text-align: center;
+    }
     footer {
-      position: absolute;
-      bottom: 1rem;
-      right: 1rem;
+      margin-top: 2rem;
       font-size: 0.8rem;
       color: #888;
-    }
-
-    @media (max-width: 600px) {
-      footer {
-        position: static;
-        margin-top: 2rem;
-        text-align: right;
-      }
+      text-align: right;
     }
   </style>
 </head>
@@ -117,57 +129,112 @@
   </header>
 
   <h1>Feedback zum Event</h1>
+
   <form id="feedbackForm">
-    <label>Wie zufrieden warst du insgesamt mit dem Event? <span style="color: red">*</span>
-      <select required name="overall">
-        <option value="">Bitte auswählen</option>
-        <option>Sehr zufrieden</option>
-        <option>Zufrieden</option>
-        <option>Neutral</option>
-        <option>Unzufrieden</option>
-        <option>Sehr unzufrieden</option>
-      </select>
-    </label>
+    <label for="overall" class="required">Wie zufrieden bist du insgesamt mit dem Event?</label>
+    <select id="overall" name="overall" required>
+      <option value="">Bitte wählen</option>
+      <option value="1">1 – Sehr unzufrieden</option>
+      <option value="2">2</option>
+      <option value="3">3 – Neutral</option>
+      <option value="4">4</option>
+      <option value="5">5 – Sehr zufrieden</option>
+    </select>
 
-    <label>Wie hat dir das Menü geschmeckt? <span style="color: red">*</span>
-      <select required name="menu">
-        <option value="">Bitte auswählen</option>
-        <option>Ausgezeichnet</option>
-        <option>Gut</option>
-        <option>Okay</option>
-        <option>Schwach</option>
-        <option>Schlecht</option>
-      </select>
-    </label>
+    <label for="menu" class="required">Wie fandest du das Drei-Gänge-Menü?</label>
+    <select id="menu" name="menu" required>
+      <option value="">Bitte wählen</option>
+      <option value="1">1 – Schlecht</option>
+      <option value="2">2</option>
+      <option value="3">3 – Okay</option>
+      <option value="4">4</option>
+      <option value="5">5 – Ausgezeichnet</option>
+    </select>
 
-    <label>Wie fandest du das Tischwechsel-Konzept? <span style="color: red">*</span>
-      <select required name="rotation">
-        <option value="">Bitte auswählen</option>
-        <option>Sehr bereichernd</option>
-        <option>Gut</option>
-        <option>Neutral</option>
-        <option>Nicht hilfreich</option>
-      </select>
-    </label>
+    <label for="networking" class="required">Wie hilfreich war das Tischwechsel-Konzept für dein Networking?</label>
+    <select id="networking" name="networking" required>
+      <option value="">Bitte wählen</option>
+      <option value="1">1 – Nicht hilfreich</option>
+      <option value="2">2</option>
+      <option value="3">3 – Neutral</option>
+      <option value="4">4</option>
+      <option value="5">5 – Sehr hilfreich</option>
+    </select>
 
-    <label>Was hat dir besonders gut gefallen?</label>
-    <textarea name="positive"></textarea>
+    <label for="atmosphere" class="required">Wie empfandest du die Atmosphäre / Location?</label>
+    <select id="atmosphere" name="atmosphere" required>
+      <option value="">Bitte wählen</option>
+      <option value="1">1 – Schlecht</option>
+      <option value="2">2</option>
+      <option value="3">3 – Okay</option>
+      <option value="4">4</option>
+      <option value="5">5 – Ausgezeichnet</option>
+    </select>
 
-    <label>Was können wir beim nächsten Mal verbessern?</label>
-    <textarea name="improvement"></textarea>
+    <label for="likes">Was hat dir besonders gut gefallen?</label>
+    <textarea id="likes" name="likes" placeholder="Dein Feedback..."></textarea>
 
-    <label>Sonstige Anmerkungen?</label>
-    <textarea name="comments"></textarea>
+    <label for="improvements">Was können wir beim nächsten Mal besser machen?</label>
+    <textarea id="improvements" name="improvements" placeholder="Dein Feedback..."></textarea>
 
-    <button type="submit">Feedback absenden</button>
+    <label for="repeat" class="required">Würdest du an einem ähnlichen Event wieder teilnehmen?</label>
+    <select id="repeat" name="repeat" required>
+      <option value="">Bitte wählen</option>
+      <option value="ja">Ja</option>
+      <option value="nein">Nein</option>
+    </select>
+
+    <div class="button-row">
+      <button type="submit">Absenden</button>
+      <button type="button" class="back-button" onclick="window.location.href='index.html'">Zur Startseite</button>
+    </div>
+
+    <div id="formMessage"></div>
   </form>
-
-  <a href="index.html" class="back-link">Zurück zur Startseite</a>
 
   <footer>
     © Alexander Weber 2025
   </footer>
 
-  <script src="feedback.js"></script>
+  <script>
+    const form = document.getElementById('feedbackForm');
+    const formMessage = document.getElementById('formMessage');
+    const submitButton = form.querySelector('button[type="submit"]');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const url = 'https://script.google.com/macros/s/AKfycbzOpwBf-oGHfhvzJEsJ0D6Tqf14UG6HGK9Jjr5PizsfOA12k_OHm0aIl-xuVPlt_vu3uQ/exec'; // <-- Hier Web-App-URL eintragen!
+
+      const formData = new FormData(form);
+
+      // Button deaktivieren, um Mehrfachsendungen zu verhindern
+      submitButton.disabled = true;
+      submitButton.textContent = 'Wird gesendet...';
+
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          body: formData,
+        });
+
+        const result = await response.json();
+
+        if (result.result === 'success') {
+          formMessage.textContent = 'Danke für dein Feedback!';
+          formMessage.className = 'success-message';
+          form.reset();
+        } else {
+          throw new Error('Fehler beim Absenden');
+        }
+      } catch (error) {
+        formMessage.textContent = 'Fehler beim Absenden. Bitte versuche es später nochmal.';
+        formMessage.className = 'error-message';
+        // Button wieder aktivieren bei Fehler
+        submitButton.disabled = false;
+        submitButton.textContent = 'Absenden';
+      }
+    });
+  </script>
 </body>
 </html>
