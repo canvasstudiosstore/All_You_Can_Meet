@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feedback zum ALL YOU CAN MEET Event</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 1rem;
+      background: #f5f5f5;
+      color: #333;
+      max-width: 700px;
+      box-sizing: border-box;
+      min-height: 100vh;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .logo-block {
+      background: #000;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    .logo-block img {
+      height: 60px;
+    }
+
+    header a img:last-child {
+      height: 70px !important;
+    }
+
+    form {
+      background: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      flex-grow: 1;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+
+    select, textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.3rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      background: #0066cc;
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button.back-button {
+      background: #555;
+      margin-left: 1rem;
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: flex-start;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .success-message {
+      margin-top: 1rem;
+      color: green;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .error-message {
+      margin-top: 1rem;
+      color: red;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      color: #888;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="https://wj-duh.de/" class="logo-block" target="_blank">
+      <img src="https://wj-duh.de/files/WJ-Dortmund_Logo_weiss.svg" alt="Wirtschaftsjunioren Logo" />
+    </a>
+    <a href="https://www.rohrmeisterei-schwerte.de" target="_blank">
+      <img src="https://www.rohrmeisterei-schwerte.de/files/framework/images/logo@2x.png" alt="Rohrmeisterei Logo" />
+    </a>
+  </header>
+
+  <h1>Feedback zum Event</h1>
+
+  <form id="feedbackForm">
+    <label for="overall">Wie zufrieden bist du insgesamt mit dem Event?</label>
+    <select id="overall" name="overall" required>
+      <option value="">Bitte wählen</option>
+      <option value="1">1 – Sehr unzufrieden</option>
+      <option value="2">2</option>
+      <option value="3">3 – Neutral</option>
+      <option value="4">4</option>
+      <option value="5">5 – Sehr zufrieden</option>
+    </select>
+
+    <label for="menu">Wie fandest du das Drei-Gänge-Menü?</label>
+    <select id="menu" name="menu" required>
+      <option value="">Bitte wählen</option>
+      <option value="1">1 – Schlecht</option>
+      <option value="2">2</option>
+      <option value="3">3 – Okay</option>
+      <option value="4">4</option>
+      <option value="5">5 – Ausgezeichnet</option>
+    </select>
+
+    <label for="networking">Wie hilfreich war das Tischwechsel-Konzept für dein Networking?</label>
+    <select id="networking" name="networking" required>
+      <option value="">Bitte wählen</option>
+      <option value="1">1 – Nicht hilfreich</option>
+      <option value="2">2</option>
+      <option value="3">3 – Neutral</option>
+      <option value="4">4</option>
+      <option value="5">5 – Sehr hilfreich</option>
+    </select>
+
+    <label for="atmosphere">Wie empfandest du die Atmosphäre / Location?</label>
+    <select id="atmosphere" name="atmosphere" required>
+      <option value="">Bitte wählen</option>
+      <option value="1">1 – Schlecht</option>
+      <option value="2">2</option>
+      <option value="3">3 – Okay</option>
+      <option value="4">4</option>
+      <option value="5">5 – Ausgezeichnet</option>
+    </select>
+
+    <label for="likes">Was hat dir besonders gut gefallen?</label>
+    <textarea id="likes" name="likes" placeholder="Dein Feedback..."></textarea>
+
+    <label for="improvements">Was können wir beim nächsten Mal besser machen?</label>
+    <textarea id="improvements" name="improvements" placeholder="Dein Feedback..."></textarea>
+
+    <label for="repeat">Würdest du an einem ähnlichen Event wieder teilnehmen?</label>
+    <select id="repeat" name="repeat" required>
+      <option value="">Bitte wählen</option>
+      <option value="ja">Ja</option>
+      <option value="nein">Nein</option>
+    </select>
+
+    <div class="button-row">
+      <button type="submit">Absenden</button>
+      <button type="button" class="back-button" onclick="window.location.href='index.html'">Zur Startseite</button>
+    </div>
+
+    <div id="formMessage"></div>
+  </form>
+
+  <footer>
+    © Alexander Weber 2025
+  </footer>
+
+  <script>
+    const form = document.getElementById('feedbackForm');
+    const formMessage = document.getElementById('formMessage');
+
+    form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const url = 'https://script.google.com/macros/s/AKfycbzOpwBf-oGHfhvzJEsJ0D6Tqf14UG6HGK9Jjr5PizsfOA12k_OHm0aIl-xuVPlt_vu3uQ/exec';
+  const formData = new FormData(form);
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      body: formData,
+    });
+
+    const result = await response.json();
+
+    if (result.result === 'success') {
+      formMessage.textContent = 'Danke für dein Feedback!';
+      formMessage.className = 'success-message';
+      form.reset();
+    } else {
+      throw new Error('Fehler beim Absenden');
+    }
+  } catch (error) {
+    formMessage.textContent = 'Fehler beim Absenden. Bitte versuche es später nochmal.';
+    formMessage.className = 'error-message';
+  }
+});
+
+  </script>
+</body>
+</html>
