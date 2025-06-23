@@ -1,4 +1,4 @@
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTdRv8MtV5_X7uNetgybGAcxx7JZeD_3kZIot4uuJ2k4URQSlIBqfJci9tgzWnZ1BGbD98Zlq0wycW5/gviz/tq?tqx=out:json";
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/1vTOtSPwhzF5_ckYPhaOVoSHFninJhfqqGfqYdUVcHNg/gviz/tq?tqx=out:json";
 
 async function fetchSheetData() {
   const res = await fetch(SHEET_URL);
