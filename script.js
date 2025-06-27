@@ -67,61 +67,58 @@ async function findPerson() {
 
   showSpinner(true); // ⏳ Spinner an
 
-  if (person) {
-    currentPerson = person;
-    resultDiv.innerHTML = `
-      <p>Hallo <strong>${person.vorname}</strong>, du sitzt:</p>
-      <ul>
-        <li>🥗 1. Gang – Tisch ${person.gang1 || "noch nicht zugewiesen"}</li>
-        <li>🍝 2. Gang – Tisch ${person.gang2 || "noch nicht zugewiesen"}</li>
-        <li>🍰 3. Gang – Tisch ${person.gang3 || "noch nicht zugewiesen"}</li>
-      </ul>
-    `;
-    await checkIfMealSubmitted(person.name, person.vorname);
-  } else {
+  if (!person) {
     resultDiv.innerHTML = "<p style='color:red'>Nachname nicht gefunden. Bitte prüfe die Eingabe.</p>";
-    mealSection.style.display = "none";
+    mealSection.classList.remove("visible"); // ❌ Formular ausblenden
+    showSpinner(false);
+    return;
   }
+
+  currentPerson = person;
+  resultDiv.innerHTML = `
+    <p>Hallo <strong>${person.vorname}</strong>, du sitzt:</p>
+    <ul>
+      <li>🥗 1. Gang – Tisch ${person.gang1 || "noch nicht zugewiesen"}</li>
+      <li>🍝 2. Gang – Tisch ${person.gang2 || "noch nicht zugewiesen"}</li>
+      <li>🍰 3. Gang – Tisch ${person.gang3 || "noch nicht zugewiesen"}</li>
+    </ul>
+  `;
+
+  // 🧠 Übergib Vorname für personalisierte Überschrift
+  await checkIfMealSubmitted(person.name, person.vorname);
 
   showSpinner(false); // ✅ Spinner aus
 }
 
 
-async function checkIfMealSubmitted(name, vorname) {
-  const response = await fetch(`${MEAL_FORM_URL}?action=check&name=${encodeURIComponent(name)}`);
-  const result = await response.json();
 
+function checkIfMealSubmitted(name) {
   const mealSection = document.getElementById("mealSection");
   const mealMessage = document.getElementById("mealMessage");
   const editButton = document.getElementById("editButton");
-  const formElements = document.getElementById("mealForm").elements;
 
-  mealHeadline.textContent = `${vorname}, was möchtest du essen?`;
-  mealSection.style.display = "block";
+  fetch(`${MEAL_FORM_URL}?action=check&name=${encodeURIComponent(name)}`)
+    .then(response => response.json())
+    .then(result => {
+      mealSection.classList.add("visible"); // Zeige das Formular erst hier
 
-  if (result.exists) {
-    mealExists = true;
-    mealMessage.innerHTML = "<p style='color:red'>Du hast deine Auswahl bereits abgeschickt.</p>";
-
-    // Deaktiviere Formularfelder
-    for (let el of formElements) {
-      if (el.tagName !== "BUTTON") el.disabled = true;
-    }
-
-    // Zeige blauen Bearbeiten-Knopf
-    editButton.style.display = "inline-block";
-    editButton.style.backgroundColor = "#0066cc";
-  } else {
-    mealExists = false;
-    mealMessage.innerHTML = "";
-    editButton.style.display = "none";
-
-    // Aktiviere Formularfelder
-    for (let el of formElements) {
-      el.disabled = false;
-    }
-  }
+      if (result.exists) {
+        mealExists = true;
+        mealMessage.innerHTML = "<p style='color:red'>Du hast deine Auswahl bereits abgeschickt.</p>";
+        editButton.style.display = "inline-block";
+        editButton.style.backgroundColor = "#0066cc"; // Optional: blauer Button
+      } else {
+        mealExists = false;
+        mealMessage.innerHTML = "";
+        editButton.style.display = "none";
+      }
+    })
+    .catch(() => {
+      mealSection.classList.remove("visible");
+      mealMessage.innerHTML = "<p style='color:red'>Es gab ein Problem beim Abrufen deiner Essenswahl.</p>";
+    });
 }
+
 
 
 function enableEdit() {
