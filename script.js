@@ -43,7 +43,7 @@ function setupAutocomplete() {
   });
 }
 
-const MEAL_FORM_URL = "https://script.google.com/macros/s/AKfycbw2J3Co4TAB3eUqQXm2qau98yZA2VSZYy5KNLkwzGzIjvKhRPVgrgKydgwUnSVmc-C2BQ/exec"; // <-- anpassen!
+const MEAL_FORM_URL = "https://script.google.com/macros/s/AKfycbzm_NoylWWA2xKSItzgO3cfnJvk2xw9L77jjCuEMDi6CxkteknBBYwivhGvYy1YHx1YCQ/exec"; // <-- anpassen!
 
 let currentPerson = null;
 let mealExists = false;
