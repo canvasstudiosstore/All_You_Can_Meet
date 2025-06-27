@@ -28,7 +28,9 @@ async function fetchSheetData() {
 
 function setupAutocomplete() {
   const input = document.getElementById("nameInput");
-  const datalist = document.getElementById("nameList");
+  const datalist = document.getElementById("nameList"
+
+  );
 
   if (!input || !datalist) return;
 
@@ -43,12 +45,18 @@ function setupAutocomplete() {
   });
 }
 
+function showSpinner(show) {
+  const spinner = document.getElementById("loadingSpinner");
+  if (spinner) spinner.style.display = show ? "block" : "none";
+}
+
+
 const MEAL_FORM_URL = "https://script.google.com/macros/s/AKfycbzm_NoylWWA2xKSItzgO3cfnJvk2xw9L77jjCuEMDi6CxkteknBBYwivhGvYy1YHx1YCQ/exec"; // <-- anpassen!
 
 let currentPerson = null;
 let mealExists = false;
 
-function findPerson() {
+async function findPerson() {
   const inputElement = document.getElementById("nameInput");
   const resultDiv = document.getElementById("result");
   const mealSection = document.getElementById("mealSection");
@@ -56,6 +64,8 @@ function findPerson() {
 
   const input = inputElement.value.trim().toLowerCase();
   const person = data.find(p => p.name === input);
+
+  showSpinner(true); // ⏳ Spinner an
 
   if (person) {
     currentPerson = person;
@@ -67,39 +77,65 @@ function findPerson() {
         <li>🍰 3. Gang – Tisch ${person.gang3 || "noch nicht zugewiesen"}</li>
       </ul>
     `;
-    mealHeadline.textContent = `${person.vorname}, was möchtest du essen?`;
-    checkIfMealSubmitted(person.name);
+    await checkIfMealSubmitted(person.name, person.vorname);
   } else {
     resultDiv.innerHTML = "<p style='color:red'>Nachname nicht gefunden. Bitte prüfe die Eingabe.</p>";
     mealSection.style.display = "none";
   }
+
+  showSpinner(false); // ✅ Spinner aus
 }
 
-async function checkIfMealSubmitted(name) {
+
+async function checkIfMealSubmitted(name, vorname) {
   const response = await fetch(`${MEAL_FORM_URL}?action=check&name=${encodeURIComponent(name)}`);
   const result = await response.json();
 
   const mealSection = document.getElementById("mealSection");
   const mealMessage = document.getElementById("mealMessage");
   const editButton = document.getElementById("editButton");
+  const formElements = document.getElementById("mealForm").elements;
+
+  mealHeadline.textContent = `${vorname}, was möchtest du essen?`;
+  mealSection.style.display = "block";
 
   if (result.exists) {
     mealExists = true;
     mealMessage.innerHTML = "<p style='color:red'>Du hast deine Auswahl bereits abgeschickt.</p>";
+
+    // Deaktiviere Formularfelder
+    for (let el of formElements) {
+      if (el.tagName !== "BUTTON") el.disabled = true;
+    }
+
+    // Zeige blauen Bearbeiten-Knopf
     editButton.style.display = "inline-block";
-    mealSection.style.display = "block";
+    editButton.style.backgroundColor = "#0066cc";
   } else {
     mealExists = false;
     mealMessage.innerHTML = "";
     editButton.style.display = "none";
-    mealSection.style.display = "block";
+
+    // Aktiviere Formularfelder
+    for (let el of formElements) {
+      el.disabled = false;
+    }
   }
 }
+
 
 function enableEdit() {
   document.getElementById("mealMessage").textContent = "";
   mealExists = false;
+
+  const formElements = document.getElementById("mealForm").elements;
+  for (let el of formElements) {
+    el.disabled = false;
+  }
+
+  document.getElementById("editButton").style.display = "none";
 }
+
 
 document.getElementById("mealForm").addEventListener("submit", async function (e) {
   e.preventDefault();
