@@ -188,7 +188,8 @@ document.getElementById("mealForm").addEventListener("submit", async function (e
     document.getElementById("mealMessage").innerHTML = "<p style='color:red'>Fehler beim Senden. Bitte versuche es erneut.</p>";
   } finally {
     submitBtn.disabled = false;
-    submitBtn.textContent = "Absenden";
+    submitBtn.textContent = mealExists ? "Bearbeiten" : "Absenden";
+
   }
 });
 
