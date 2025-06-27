@@ -43,29 +43,6 @@ function setupAutocomplete() {
   });
 }
 
-function findPerson() {
-  const inputElement = document.getElementById("nameInput");
-  const resultDiv = document.getElementById("result");
-
-  if (!inputElement || !resultDiv) return;
-
-  const input = inputElement.value.trim().toLowerCase();
-  const person = data.find(p => p.name === input);
-
-  if (person) {
-    resultDiv.innerHTML = `
-      <p>Hallo <strong>${person.vorname}</strong>, du sitzt:</p>
-      <ul>
-        <li>🥗 1. Gang – Tisch ${person.gang1 || "noch nicht zugewiesen"}</li>
-        <li>🍝 2. Gang – Tisch ${person.gang2 || "noch nicht zugewiesen"}</li>
-        <li>🍰 3. Gang – Tisch ${person.gang3 || "noch nicht zugewiesen"}</li>
-      </ul>
-    `;
-  } else {
-    resultDiv.innerHTML = "<p style='color:red'>Nachname nicht gefunden. Bitte prüfe die Eingabe.</p>";
-  }
-}
-
 const MEAL_FORM_URL = "https://script.google.com/macros/s/AKfycbw2J3Co4TAB3eUqQXm2qau98yZA2VSZYy5KNLkwzGzIjvKhRPVgrgKydgwUnSVmc-C2BQ/exec"; // <-- anpassen!
 
 let currentPerson = null;
