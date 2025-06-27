@@ -119,7 +119,7 @@ async function checkIfMealSubmitted(name, vorname) {
     // 🔄 Button-Text anpassen
     submitButton.textContent = "Bearbeiten";
 
-    mealMessage.innerHTML = "<p style='color:red'>Du hast deine Auswahl bereits abgeschickt. Du kannst sie nun bearbeiten und erneut speichern.</p>";
+    mealMessage.innerHTML = "<p style='color:orange'>Du hast deine Auswahl bereits abgeschickt. Du kannst sie nun bearbeiten und erneut speichern.</p>";
   } else {
     mealExists = false;
 
