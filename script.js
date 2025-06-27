@@ -103,7 +103,7 @@ async function checkIfMealSubmitted(name, vorname) {
   const mealHeadline = document.getElementById("mealHeadline");
   const mealMessage = document.getElementById("mealMessage");
   const mealForm = document.getElementById("mealForm");
-  const submitButton = mealForm.querySelector('button[type="submit"]');
+  const submitButton = document.getElementById("submitButton");
 
   mealHeadline.textContent = `${vorname}, was möchtest du essen?`;
   mealSection.style.display = "block";
@@ -111,17 +111,25 @@ async function checkIfMealSubmitted(name, vorname) {
   if (result.exists) {
     mealExists = true;
 
-    // 🔽 HIER EINSETZEN – Formular vorausfüllen
+    // 🟢 Formular vorausfüllen
     document.getElementById("main").value = result.main || "";
     document.getElementById("dessert").value = result.dessert || "";
     document.getElementById("zusatz").value = result.zusatz || "";
 
-    mealMessage.innerHTML = "<p style='color:red'>Du hast deine Auswahl bereits abgeschickt.</p>";
+    // 🔄 Button-Text anpassen
+    submitButton.textContent = "Bearbeiten";
+
+    mealMessage.innerHTML = "<p style='color:red'>Du hast deine Auswahl bereits abgeschickt. Du kannst sie nun bearbeiten und erneut speichern.</p>";
   } else {
     mealExists = false;
+
+    // 📝 Button zurück auf "Absenden"
+    submitButton.textContent = "Absenden";
+
     mealMessage.innerHTML = "";
   }
 }
+
 
 
 
