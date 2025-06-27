@@ -66,7 +66,7 @@ function findPerson() {
   }
 }
 
-const MEAL_FORM_URL = "https://script.google.com/macros/s/AKfycbxJmu4OnsFTPOlAT9t9EitZeoxhHS_6Snwar3zHgdHy56XStgkIfc0Vxe4_Dn0gW54TBQ/exechttps://script.google.com/macros/s/AKfycbw2J3Co4TAB3eUqQXm2qau98yZA2VSZYy5KNLkwzGzIjvKhRPVgrgKydgwUnSVmc-C2BQ/exec"; // <-- anpassen!
+const MEAL_FORM_URL = "https://script.google.com/macros/s/AKfycbw2J3Co4TAB3eUqQXm2qau98yZA2VSZYy5KNLkwzGzIjvKhRPVgrgKydgwUnSVmc-C2BQ/exec"; // <-- anpassen!
 
 let currentPerson = null;
 let mealExists = false;
