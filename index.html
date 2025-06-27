@@ -142,13 +142,45 @@
   </section>
 
   <h1>Sitzplatz finden</h1>
-  <p>Gib deine E-Mail-Adresse ein:</p>
-  <input list="emailList" id="emailInput" placeholder="name@example.com" />
-  <datalist id="emailList"></datalist>
-  <br />
-  <button onclick="findPerson()">Anzeigen</button>
+<p>Gib deinen Nachnamen ein:</p>
+<input list="nameList" id="nameInput" placeholder="Müller" />
+<datalist id="nameList"></datalist>
+<br />
+<button onclick="findPerson()">Anzeigen</button>
+
 
   <div id="result"></div>
+
+  <div id="mealSection" style="display:none; margin-top: 2rem;">
+  <h2 id="mealHeadline"></h2>
+  <form id="mealForm">
+    <p><strong>Vorspeise (wird serviert):</strong> Antipasti von gegrilltem Gemüse mit Quiche der Saison</p>
+
+    <label for="main" class="required">Hauptgang *</label>
+    <select id="main" name="main" required>
+      <option value="">Bitte wählen</option>
+      <option value="Schwein">Medaillons vom Schwein mit Honigsenf</option>
+      <option value="Lachs">Linguine mit Lachs in Parmesan-Sauce</option>
+      <option value="Vegetarisch">Orientalisches Gemüseragout</option>
+    </select>
+
+    <label for="dessert" class="required">Dessert *</label>
+    <select id="dessert" name="dessert" required>
+      <option value="">Bitte wählen</option>
+      <option value="Creme Brulee">Creme Brûlée mit Erdbeer-Gel</option>
+      <option value="Käse">Französische Rohmilchkäseauswahl</option>
+    </select>
+
+    <label for="zusatz">Zusatzwünsche / Hinweise (optional)</label>
+    <textarea id="zusatz" name="zusatz" placeholder="z. B. Allergien, Abweichungen..."></textarea>
+
+    <button type="submit" style="margin-top: 1rem;">Absenden</button>
+    <button type="button" id="editButton" style="display: none; background: #888;" onclick="enableEdit()">Bearbeiten</button>
+
+    <div id="mealMessage" style="margin-top: 1rem;"></div>
+  </form>
+</div>
+
 
   <a href="feedback.html" class="feedback-link">Feedback geben</a>
 
