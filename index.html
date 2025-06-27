@@ -89,14 +89,15 @@ button:hover {
 }
 
 #result {
+  display: none; /* Nur sichtbar machen wenn Name gefunden wurde */
   font-size: 1.1rem;
   margin: 1.5rem 0;
   background: #fff;
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  display: none;
 }
+
 
 
 .feedback-link {
@@ -210,7 +211,7 @@ label.required::after {
   <form id="mealForm">
     <p><strong>Vorspeise (wird serviert):</strong> Antipasti von gegrilltem Gemüse mit Quiche der Saison</p>
 
-    <label for="main" class="required">Hauptgang *</label>
+    <label for="main" class="required">Hauptgang</label>
     <select id="main" name="main" required>
       <option value="">Bitte wählen</option>
       <option value="Schwein">Medaillons vom Schwein mit Honigsenf</option>
@@ -218,7 +219,7 @@ label.required::after {
       <option value="Vegetarisch">Orientalisches Gemüseragout</option>
     </select>
 
-    <label for="dessert" class="required">Dessert *</label>
+    <label for="dessert" class="required">Dessert</label>
     <select id="dessert" name="dessert" required>
       <option value="">Bitte wählen</option>
       <option value="Creme Brulee">Crème Brûlée mit Erdbeer-Gel</option>

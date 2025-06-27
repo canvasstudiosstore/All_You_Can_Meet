@@ -77,14 +77,15 @@ async function findPerson() {
 
   currentPerson = person;
   resultDiv.innerHTML = `
-    <p>Hallo <strong>${person.vorname}</strong>, du sitzt:</p>
-    <ul>
-      <li>🥗 1. Gang – Tisch ${person.gang1 || "noch nicht zugewiesen"}</li>
-      <li>🍝 2. Gang – Tisch ${person.gang2 || "noch nicht zugewiesen"}</li>
-      <li>🍰 3. Gang – Tisch ${person.gang3 || "noch nicht zugewiesen"}</li>
-    </ul>
-  `;
-  resultDiv.style.display = "block"; // auch hier sichtbar machen
+  <p>Hallo <strong>${person.vorname}</strong>, du sitzt:</p>
+  <ul>
+    <li>🥗 1. Gang – Tisch ${person.gang1 || "noch nicht zugewiesen"}</li>
+    <li>🍝 2. Gang – Tisch ${person.gang2 || "noch nicht zugewiesen"}</li>
+    <li>🍰 3. Gang – Tisch ${person.gang3 || "noch nicht zugewiesen"}</li>
+  </ul>
+`;
+resultDiv.style.display = "block";
+
 
   await checkIfMealSubmitted(person.name, person.vorname);
 
