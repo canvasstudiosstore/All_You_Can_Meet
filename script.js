@@ -69,7 +69,8 @@ async function findPerson() {
 
   if (!person) {
     resultDiv.innerHTML = "<p style='color:red'>Nachname nicht gefunden. Bitte prüfe die Eingabe.</p>";
-    mealSection.classList.remove("visible"); // ❌ Formular ausblenden
+    resultDiv.style.display = "block"; // jetzt erst sichtbar machen
+    mealSection.classList.remove("visible");
     showSpinner(false);
     return;
   }
@@ -83,8 +84,8 @@ async function findPerson() {
       <li>🍰 3. Gang – Tisch ${person.gang3 || "noch nicht zugewiesen"}</li>
     </ul>
   `;
+  resultDiv.style.display = "block"; // auch hier sichtbar machen
 
-  // 🧠 Übergib Vorname für personalisierte Überschrift
   await checkIfMealSubmitted(person.name, person.vorname);
 
   showSpinner(false); // ✅ Spinner aus
@@ -92,46 +93,74 @@ async function findPerson() {
 
 
 
-function checkIfMealSubmitted(name) {
+
+async function checkIfMealSubmitted(name, vorname) {
+  const response = await fetch(`${MEAL_FORM_URL}?action=check&name=${encodeURIComponent(name)}`);
+  const result = await response.json();
+
   const mealSection = document.getElementById("mealSection");
+  const mealHeadline = document.getElementById("mealHeadline");
   const mealMessage = document.getElementById("mealMessage");
+  const mealForm = document.getElementById("mealForm");
   const editButton = document.getElementById("editButton");
+  const submitButton = mealForm.querySelector('button[type="submit"]');
 
-  fetch(`${MEAL_FORM_URL}?action=check&name=${encodeURIComponent(name)}`)
-    .then(response => response.json())
-    .then(result => {
-      mealSection.classList.add("visible"); // Zeige das Formular erst hier
+  mealHeadline.textContent = `${vorname}, was möchtest du essen?`;
+  mealSection.style.display = "block";
 
-      if (result.exists) {
-        mealExists = true;
-        mealMessage.innerHTML = "<p style='color:red'>Du hast deine Auswahl bereits abgeschickt.</p>";
-        editButton.style.display = "inline-block";
-        editButton.style.backgroundColor = "#0066cc"; // Optional: blauer Button
-      } else {
-        mealExists = false;
-        mealMessage.innerHTML = "";
-        editButton.style.display = "none";
-      }
-    })
-    .catch(() => {
-      mealSection.classList.remove("visible");
-      mealMessage.innerHTML = "<p style='color:red'>Es gab ein Problem beim Abrufen deiner Essenswahl.</p>";
-    });
+  if (result.exists) {
+    mealExists = true;
+
+    // 🥗 Formular vorausfüllen
+    document.getElementById("main").value = result.main || "";
+    document.getElementById("dessert").value = result.dessert || "";
+    document.getElementById("zusatz").value = result.zusatz || "";
+
+    // ⛔️ Formular deaktivieren
+    for (let el of mealForm.elements) {
+      if (el.tagName !== "BUTTON") el.disabled = true;
+    }
+
+    // 🔘 Nur Bearbeiten-Button anzeigen
+    submitButton.style.display = "none";
+    editButton.style.display = "inline-block";
+    editButton.textContent = "Bearbeiten";
+    editButton.style.backgroundColor = "#0066cc";
+    mealMessage.innerHTML = "<p style='color:red'>Du hast deine Auswahl bereits abgeschickt.</p>";
+  } else {
+    mealExists = false;
+    mealMessage.innerHTML = "";
+    editButton.style.display = "none";
+    submitButton.style.display = "inline-block";
+
+    // Aktivieren für neue Eingabe
+    for (let el of mealForm.elements) {
+      el.disabled = false;
+    }
+  }
 }
+
 
 
 
 function enableEdit() {
-  document.getElementById("mealMessage").textContent = "";
-  mealExists = false;
+  const mealForm = document.getElementById("mealForm");
+  const editButton = document.getElementById("editButton");
+  const submitButton = mealForm.querySelector('button[type="submit"]');
 
-  const formElements = document.getElementById("mealForm").elements;
-  for (let el of formElements) {
-    el.disabled = false;
+  // 🟢 Alle Felder aktivieren
+  for (let el of mealForm.elements) {
+    if (el.tagName !== "BUTTON") el.disabled = false;
   }
 
-  document.getElementById("editButton").style.display = "none";
+  mealExists = true;
+  document.getElementById("mealMessage").textContent = "";
+
+  // Jetzt nur Speichern zeigen
+  editButton.style.display = "none";
+  submitButton.style.display = "inline-block";
 }
+
 
 
 document.getElementById("mealForm").addEventListener("submit", async function (e) {

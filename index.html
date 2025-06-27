@@ -95,7 +95,9 @@ button:hover {
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: none;
 }
+
 
 .feedback-link {
   display: block;
@@ -162,6 +164,14 @@ label.required::after {
     display: block;
   }
 
+.button-row {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
   </style>
 </head>
 <body>
@@ -195,7 +205,7 @@ label.required::after {
 </div>
 
 
-  <div id="mealSection" class="">
+  <div id="mealSection">
   <h2 id="mealHeadline"></h2>
   <form id="mealForm">
     <p><strong>Vorspeise (wird serviert):</strong> Antipasti von gegrilltem Gemüse mit Quiche der Saison</p>
@@ -218,8 +228,11 @@ label.required::after {
     <label for="zusatz">Zusatzwünsche / Hinweise (optional)</label>
     <textarea id="zusatz" name="zusatz" placeholder="z. B. Allergien, Abweichungen..."></textarea>
 
-    <button type="submit" style="margin-top: 1rem;">Absenden</button>
-    <button type="button" id="editButton" style="display: none; margin-left: 1rem;">Bearbeiten</button>
+    <div class="button-row">
+  <button type="submit" id="submitButton">Absenden</button>
+  <button type="button" id="editButton" style="display: none;">Bearbeiten</button>
+</div>
+
 
     <div id="mealMessage" style="margin-top: 1rem;"></div>
   </form>
