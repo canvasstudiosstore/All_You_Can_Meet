@@ -103,43 +103,31 @@ async function checkIfMealSubmitted(name, vorname) {
   const mealHeadline = document.getElementById("mealHeadline");
   const mealMessage = document.getElementById("mealMessage");
   const mealForm = document.getElementById("mealForm");
-  const editButton = document.getElementById("editButton");
-  const submitButton = mealForm.querySelector('button[type="submit"]');
 
   mealHeadline.textContent = `${vorname}, was möchtest du essen?`;
   mealSection.style.display = "block";
 
+  // Immer aktivierbar – Felder vorbereiten
+  mealForm.reset();
+  for (let el of mealForm.elements) {
+    el.disabled = false;
+  }
+
   if (result.exists) {
     mealExists = true;
 
-    // 🥗 Formular vorausfüllen
+    // Vorbelegen
     document.getElementById("main").value = result.main || "";
     document.getElementById("dessert").value = result.dessert || "";
     document.getElementById("zusatz").value = result.zusatz || "";
 
-    // ⛔️ Formular deaktivieren
-    for (let el of mealForm.elements) {
-      if (el.tagName !== "BUTTON") el.disabled = true;
-    }
-
-    // 🔘 Nur Bearbeiten-Button anzeigen
-    submitButton.style.display = "none";
-    editButton.style.display = "inline-block";
-    editButton.textContent = "Bearbeiten";
-    editButton.style.backgroundColor = "#0066cc";
-    mealMessage.innerHTML = "<p style='color:red'>Du hast deine Auswahl bereits abgeschickt.</p>";
+    mealMessage.innerHTML = "<p style='color:orange'>Dein Wunsch ist bereits gespeichert. Du kannst ihn hier ändern und erneut absenden.</p>";
   } else {
     mealExists = false;
     mealMessage.innerHTML = "";
-    editButton.style.display = "none";
-    submitButton.style.display = "inline-block";
-
-    // Aktivieren für neue Eingabe
-    for (let el of mealForm.elements) {
-      el.disabled = false;
-    }
   }
 }
+
 
 
 
