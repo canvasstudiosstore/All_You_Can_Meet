@@ -68,6 +68,31 @@ function renderTables(data) {
   const container = document.getElementById("ordersContainer");
   container.innerHTML = "";
 
+  // 🥗 Vorspeise-Tabelle für alle
+  const starterSection = document.createElement("section");
+  starterSection.className = "table-section";
+
+  const heading = document.createElement("h2");
+  heading.textContent = "🥗 Vorspeise";
+  starterSection.appendChild(heading);
+
+  const table = document.createElement("table");
+  const thead = document.createElement("thead");
+  thead.innerHTML = "<tr><th>Name</th><th>Vorspeise</th></tr>";
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+  data.forEach(entry => {
+    const row = document.createElement("tr");
+    row.innerHTML = `<td>${entry.vorname} ${entry.name}</td><td>Antipasti mit Quiche</td>`;
+    tbody.appendChild(row);
+  });
+  table.appendChild(tbody);
+
+  starterSection.appendChild(table);
+  container.appendChild(starterSection);
+
+  // Bestehende Gang 2 + Gang 3 Tabellen
   const gang2Tische = {};
   const gang3Tische = {};
 
@@ -87,6 +112,7 @@ function renderTables(data) {
   container.appendChild(makeTableBlock("🍝 Hauptgang (Gang 2)", gang2Tische, "hauptgang"));
   container.appendChild(makeTableBlock("🍰 Dessert (Gang 3)", gang3Tische, "dessert"));
 }
+
 
 function renderGroupedMeals(data) {
   const container = document.getElementById("ordersContainer");
@@ -144,6 +170,26 @@ function renderGroupedMeals(data) {
     table.appendChild(tbody);
     return table;
   }
+  // 🥗 Vorspeise gesamt
+  const starterTable = document.createElement("table");
+  starterTable.classList.add("starter-table");
+
+  const starterCaption = document.createElement("caption");
+  starterCaption.textContent = "🥗 Vorspeise";
+  starterTable.appendChild(starterCaption);
+
+  const theadStarter = document.createElement("thead");
+  theadStarter.innerHTML = "<tr><th>Gericht</th><th>Anzahl</th></tr>";
+  starterTable.appendChild(theadStarter);
+
+  const tbodyStarter = document.createElement("tbody");
+  const starterRow = document.createElement("tr");
+  starterRow.innerHTML = `<td>Antipasti mit Quiche</td><td>${data.length}</td>`;
+  tbodyStarter.appendChild(starterRow);
+  starterTable.appendChild(tbodyStarter);
+
+  section.appendChild(starterTable);
+
 
   // Hauptgänge-Tabelle
   section.appendChild(createMealTable("🥘 Hauptgänge", mainDishes));
