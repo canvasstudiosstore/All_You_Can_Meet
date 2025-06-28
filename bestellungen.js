@@ -1,8 +1,26 @@
 const MEAL_SHEET_URL = "https://docs.google.com/spreadsheets/d/1vTOtSPwhzF5_ckYPhaOVoSHFninJhfqqGfqYdUVcHNg/gviz/tq?sheet=Essen&tqx=out:json";
 
+let allOrders = [];
+
 window.addEventListener("DOMContentLoaded", () => {
   fetchOrders();
+
+  document.getElementById("viewTables").addEventListener("click", () => {
+    toggleActiveTab("viewTables");
+    renderTables(allOrders);
+  });
+
+  document.getElementById("viewMeals").addEventListener("click", () => {
+    toggleActiveTab("viewMeals");
+    renderGroupedMeals(allOrders);
+  });
 });
+
+function toggleActiveTab(activeId) {
+  document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
+  document.getElementById(activeId).classList.add("active");
+}
+
 
 async function fetchOrders() {
   const container = document.getElementById("ordersContainer");
@@ -37,6 +55,8 @@ async function fetchOrders() {
     container.innerHTML = "<p style='text-align:center; color:red;'>❌ Fehler beim Laden der Bestellungen.</p>";
     console.error(err);
   }
+
+
 }
 
 function renderTables(data) {
@@ -62,6 +82,54 @@ function renderTables(data) {
   container.appendChild(makeTableBlock("🍝 Hauptgang (Gang 2)", gang2Tische, "hauptgang"));
   container.appendChild(makeTableBlock("🍰 Dessert (Gang 3)", gang3Tische, "dessert"));
 }
+
+function renderGroupedMeals(data) {
+  const container = document.getElementById("ordersContainer");
+  container.innerHTML = "";
+
+  const mainDishes = {};
+  const desserts = {};
+
+  for (const entry of data) {
+    if (entry.hauptgang) {
+      mainDishes[entry.hauptgang] = (mainDishes[entry.hauptgang] || 0) + 1;
+    }
+    if (entry.dessert) {
+      desserts[entry.dessert] = (desserts[entry.dessert] || 0) + 1;
+    }
+  }
+
+  const section = document.createElement("section");
+  section.className = "table-section";
+
+  const headline = document.createElement("h2");
+  headline.textContent = "🍽️ Übersicht nach Gerichten";
+  section.appendChild(headline);
+
+  const table = document.createElement("table");
+  const thead = document.createElement("thead");
+  thead.innerHTML = `<tr><th>Gericht</th><th>Anzahl</th></tr>`;
+  table.appendChild(thead);
+
+  const tbody = document.createElement("tbody");
+
+  Object.entries(mainDishes).forEach(([gericht, anzahl]) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `<td>${gericht} (Hauptgang)</td><td>${anzahl}</td>`;
+    tbody.appendChild(row);
+  });
+
+  Object.entries(desserts).forEach(([gericht, anzahl]) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `<td>${gericht} (Dessert)</td><td>${anzahl}</td>`;
+    tbody.appendChild(row);
+  });
+
+  table.appendChild(tbody);
+  section.appendChild(table);
+  container.appendChild(section);
+}
+
 
 function makeTableBlock(title, groupedData, field) {
   const section = document.createElement("section");
