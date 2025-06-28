@@ -144,7 +144,11 @@ function renderGroupedMeals(data) {
     tbody.appendChild(sumRow);
 
     table.appendChild(tbody);
-    return table;
+    const wrapper = document.createElement("div");
+    wrapper.className = "table-wrapper";
+    wrapper.appendChild(table);
+    return wrapper;
+
   }
   // 🥗 Vorspeise gesamt
   const starterTable = document.createElement("table");
@@ -164,7 +168,11 @@ function renderGroupedMeals(data) {
   tbodyStarter.appendChild(starterRow);
   starterTable.appendChild(tbodyStarter);
 
-  section.appendChild(starterTable);
+  const starterWrapper = document.createElement("div");
+    starterWrapper.className = "table-wrapper";
+    starterWrapper.appendChild(starterTable);
+    section.appendChild(starterWrapper);
+
 
 
   // Hauptgänge-Tabelle
@@ -217,7 +225,11 @@ function makeTableBlock(title, groupedData, field) {
       tbody.appendChild(row);
     });
     table.appendChild(tbody);
-    section.appendChild(table);
+    const wrapper = document.createElement("div");
+    wrapper.className = "table-wrapper";
+    wrapper.appendChild(table);
+    section.appendChild(wrapper);
+
   }
 
   return section;

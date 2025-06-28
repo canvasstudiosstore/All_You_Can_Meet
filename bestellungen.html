@@ -174,8 +174,19 @@ table {
 }
 
 td, th {
-  word-wrap: break-word;
+  word-break: break-word;
   font-size: 0.95rem;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-wrapper table {
+  min-width: 600px;
+  width: 100%;
 }
 
 
