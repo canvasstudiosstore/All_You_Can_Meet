@@ -34,7 +34,7 @@ async function fetchOrders() {
     const rows = json.table.rows;
     const orders = [];
 
-    for (let i = 1; i < rows.length; i++) {
+    for (let i = 0; i < rows.length; i++) {
       const row = rows[i];
       if (!row || !row.c) continue;
 
