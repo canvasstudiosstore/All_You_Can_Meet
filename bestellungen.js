@@ -36,7 +36,7 @@ async function fetchOrders() {
 
     for (let i = 1; i < rows.length; i++) {
       const row = rows[i];
-      if (!row || !row.c || !row.c[0]) continue;
+      if (!row || !row.c) continue;
 
       const name = row.c[0]?.v || "";
       const vorname = row.c[1]?.v || "";
@@ -46,18 +46,20 @@ async function fetchOrders() {
       const tisch3 = row.c[5]?.v || "";
       const zusatz = row.c[6]?.v || "";
 
-      orders.push({ name, vorname, hauptgang, tisch2, dessert, tisch3, zusatz });
+      // Nur hinzufügen, wenn entweder Vorname oder Nachname vorhanden ist
+      if (name || vorname) {
+        orders.push({ name, vorname, hauptgang, tisch2, dessert, tisch3, zusatz });
+      }
     }
 
-    // ⬅️ Wichtig: Damit Umschalten der Ansicht funktioniert
-    allOrders = orders;
-
-    renderTables(orders);
+    allOrders = orders; // Speichern für spätere Umschaltung der Ansicht
+    renderTables(orders); // Standardansicht laden
   } catch (err) {
     container.innerHTML = "<p style='text-align:center; color:red;'>❌ Fehler beim Laden der Bestellungen.</p>";
     console.error(err);
   }
 }
+
 
 
 
