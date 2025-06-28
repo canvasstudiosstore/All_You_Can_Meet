@@ -169,9 +169,11 @@ tbody tr:nth-child(even) {
 }
 
 table {
-  table-layout: fixed;
-  width: 100%;
+  table-layout: auto;
+  width: auto;
+  max-width: 100%;
 }
+
 
 td, th {
   word-break: break-word;
@@ -189,7 +191,9 @@ td, th {
   width: 100%;
 }
 
-
+td:first-child, th:first-child {
+  white-space: nowrap;
+}
   </style>
 </head>
 <body>
