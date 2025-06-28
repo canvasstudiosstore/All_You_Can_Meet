@@ -139,6 +139,28 @@ tbody tr:nth-child(even) {
   background: #bbb;
 }
 
+.tab-buttons {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.tab-button {
+  padding: 0.7rem 1.5rem;
+  margin: 0 0.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background: #ddd;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.tab-button.active {
+  background: #0066cc;
+  color: white;
+}
+
   </style>
 </head>
 <body>
@@ -168,6 +190,12 @@ tbody tr:nth-child(even) {
       🖨️ Übersicht drucken
     </button>
   </div>
+
+<div class="tab-buttons">
+  <button id="viewTables" class="tab-button active">Nach Tisch</button>
+  <button id="viewMeals" class="tab-button">Nach Gericht</button>
+</div>
+
 
 <div id="ordersContainer">Lade Bestellungen...</div>
 
