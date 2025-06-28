@@ -187,7 +187,14 @@ function makeTableBlock(title, groupedData, field) {
   heading.textContent = title;
   section.appendChild(heading);
 
-  for (const tisch in groupedData) {
+  // 🔢 Tischnamen sortieren nach Nummer (z. B. Tisch 1, Tisch 2, ...)
+  const sortedKeys = Object.keys(groupedData).sort((a, b) => {
+    const numA = parseInt(a.replace(/\D/g, ""), 10);
+    const numB = parseInt(b.replace(/\D/g, ""), 10);
+    return numA - numB;
+  });
+
+  for (const tisch of sortedKeys) {
     const group = groupedData[tisch];
 
     const table = document.createElement("table");
@@ -215,3 +222,4 @@ function makeTableBlock(title, groupedData, field) {
 
   return section;
 }
+
