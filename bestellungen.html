@@ -178,6 +178,8 @@ table {
 td, th {
   word-break: break-word;
   font-size: 0.95rem;
+    white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .table-wrapper {
@@ -186,10 +188,17 @@ td, th {
   -webkit-overflow-scrolling: touch;
 }
 
-.table-wrapper table {
-  min-width: 600px;
-  width: 100%;
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
+
+.table-wrapper table {
+  width: 100%;
+  table-layout: auto;
+  border-collapse: collapse;
+}
+
 
 td:first-child, th:first-child {
   white-space: nowrap;
