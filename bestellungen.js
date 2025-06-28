@@ -111,29 +111,50 @@ function renderGroupedMeals(data) {
   headline.textContent = "🍽️ Übersicht nach Gerichten";
   section.appendChild(headline);
 
-  const table = document.createElement("table");
-  const thead = document.createElement("thead");
-  thead.innerHTML = `<tr><th>Gericht</th><th>Anzahl</th></tr>`;
-  table.appendChild(thead);
+  // 🔹 Funktion zum Erstellen einer einzelnen Tabelle
+  function createMealTable(title, dataObj) {
+    const table = document.createElement("table");
 
-  const tbody = document.createElement("tbody");
+    const caption = document.createElement("caption");
+    caption.textContent = title;
+    table.appendChild(caption);
 
-  Object.entries(mainDishes).forEach(([gericht, anzahl]) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `<td>${gericht} (Hauptgang)</td><td>${anzahl}</td>`;
-    tbody.appendChild(row);
-  });
+    const thead = document.createElement("thead");
+    thead.innerHTML = `<tr><th>Gericht</th><th>Anzahl</th></tr>`;
+    table.appendChild(thead);
 
-  Object.entries(desserts).forEach(([gericht, anzahl]) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `<td>${gericht} (Dessert)</td><td>${anzahl}</td>`;
-    tbody.appendChild(row);
-  });
+    const tbody = document.createElement("tbody");
 
-  table.appendChild(tbody);
-  section.appendChild(table);
+    let sum = 0;
+    Object.entries(dataObj).forEach(([gericht, anzahl]) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `<td>${gericht}</td><td>${anzahl}</td>`;
+      tbody.appendChild(row);
+      sum += anzahl;
+    });
+
+    // ➕ Summenzeile
+    const sumRow = document.createElement("tr");
+    sumRow.style.backgroundColor = "#eaeaea";
+    sumRow.style.fontWeight = "bold";
+    sumRow.style.fontSize = "1.05rem";
+    sumRow.innerHTML = `<td>Gesamt</td><td>${sum}</td>`;
+    tbody.appendChild(sumRow);
+
+    table.appendChild(tbody);
+    return table;
+  }
+
+  // Hauptgänge-Tabelle
+  section.appendChild(createMealTable("🥘 Hauptgänge", mainDishes));
+
+  // Dessert-Tabelle
+  section.appendChild(createMealTable("🍰 Desserts", desserts));
+
   container.appendChild(section);
 }
+
+
 
 
 function makeTableBlock(title, groupedData, field) {
