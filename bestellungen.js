@@ -2,6 +2,11 @@ const BESTELLUNGEN_URL = "https://docs.google.com/spreadsheets/d/1vTOtSPwhzF5_ck
 
 window.addEventListener("DOMContentLoaded", () => {
   fetchAndDisplayOrders();
+  console.log("fetching:", BESTELLUNGEN_URL);
+  console.log("response ok?", res.ok, "status", res.status);
+console.log("raw text:", text.substring(0,200));
+
+
 });
 
 async function fetchAndDisplayOrders() {
