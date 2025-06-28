@@ -34,7 +34,6 @@ async function fetchOrders() {
     const rows = json.table.rows;
     const orders = [];
 
-    // Alle Zeilen einlesen
     for (let i = 1; i < rows.length; i++) {
       const row = rows[i];
       if (!row || !row.c || !row.c[0]) continue;
@@ -50,14 +49,18 @@ async function fetchOrders() {
       orders.push({ name, vorname, hauptgang, tisch2, dessert, tisch3, zusatz });
     }
 
+    // ⬅️ Wichtig: Damit Umschalten der Ansicht funktioniert
+    allOrders = orders;
+
     renderTables(orders);
   } catch (err) {
     container.innerHTML = "<p style='text-align:center; color:red;'>❌ Fehler beim Laden der Bestellungen.</p>";
     console.error(err);
   }
-
-
 }
+
+
+
 
 function renderTables(data) {
   const container = document.getElementById("ordersContainer");
