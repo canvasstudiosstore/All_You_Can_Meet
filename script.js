@@ -130,6 +130,8 @@ async function checkIfMealSubmitted(name, vorname) {
 
     mealMessage.innerHTML = "";
   }
+  console.log(result);
+
 }
 
 
