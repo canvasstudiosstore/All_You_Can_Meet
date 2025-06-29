@@ -114,7 +114,9 @@ async function checkIfMealSubmitted(name, vorname) {
     // 🟢 Formular vorausfüllen
     document.getElementById("main").value = result.main || "";
     document.getElementById("dessert").value = result.dessert || "";
-    document.getElementById("zusatz").value = result.zusatz || "";
+    document.getElementById("zusatzMain").value = result.zusatzMain || "";
+    document.getElementById("zusatzDessert").value = result.zusatzDessert || "";
+
 
     // 🔄 Button-Text anpassen
     submitButton.textContent = "Bearbeiten";
