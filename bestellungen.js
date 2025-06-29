@@ -105,95 +105,89 @@ function renderGroupedMeals(data) {
   const container = document.getElementById("ordersContainer");
   container.innerHTML = "";
 
-  const mainDishes = {};
-  const desserts = {};
+  const grouped = {
+    hauptgang: {},
+    dessert: {}
+  };
 
-  for (const entry of data) {
-    if (entry.hauptgang) {
-      mainDishes[entry.hauptgang] = (mainDishes[entry.hauptgang] || 0) + 1;
-    }
-    if (entry.dessert) {
-      desserts[entry.dessert] = (desserts[entry.dessert] || 0) + 1;
-    }
-  }
+  data.forEach(entry => {
+    ["hauptgang", "dessert"].forEach(field => {
+      const gericht = entry[field];
+      if (!gericht) return;
+
+      if (!grouped[field][gericht]) {
+        grouped[field][gericht] = {
+          count: 0,
+          zusatz: []
+        };
+      }
+
+      grouped[field][gericht].count++;
+
+      const zusatztext = field === "hauptgang" ? entry.zusatzHauptgang : entry.zusatzDessert;
+      if (zusatztext) {
+        grouped[field][gericht].zusatz.push(`1x ${zusatztext}`);
+      }
+    });
+  });
 
   const section = document.createElement("section");
   section.className = "table-section";
 
-  const headline = document.createElement("h2");
-  headline.textContent = "🍽️ Übersicht nach Gerichten";
-  section.appendChild(headline);
+  const heading = document.createElement("h2");
+  heading.textContent = "🍽️ Übersicht nach Gerichten";
+  section.appendChild(heading);
 
-  // 🔹 Funktion zum Erstellen einer einzelnen Tabelle
-  function createMealTable(title, dataObj) {
+  // 🥗 Vorspeise
+  const starterTable = document.createElement("table");
+  starterTable.classList.add("starter-table");
+
+  starterTable.innerHTML = `
+    <caption>🥗 Vorspeisen</caption>
+    <thead><tr><th>Gericht</th><th>Anzahl</th></tr></thead>
+    <tbody><tr><td>Antipasti mit Quiche</td><td>${data.length}</td></tr></tbody>
+  `;
+
+  const starterWrapper = document.createElement("div");
+  starterWrapper.className = "table-wrapper";
+  starterWrapper.appendChild(starterTable);
+  section.appendChild(starterWrapper);
+
+  // 🔄 Tabelle erzeugen für Hauptgang + Dessert
+  ["hauptgang", "dessert"].forEach(field => {
+    const title = field === "hauptgang" ? "🥘 Hauptgänge" : "🍰 Desserts";
     const table = document.createElement("table");
-
-    const caption = document.createElement("caption");
-    caption.textContent = title;
-    table.appendChild(caption);
-
     const thead = document.createElement("thead");
-    thead.innerHTML = `<tr><th>Gericht</th><th>Anzahl</th></tr>`;
+    thead.innerHTML = "<tr><th>Gericht</th><th>Anzahl</th><th>Zusatzinfos</th></tr>";
     table.appendChild(thead);
 
     const tbody = document.createElement("tbody");
 
-    let sum = 0;
-    Object.entries(dataObj).forEach(([gericht, anzahl]) => {
+    for (const gericht in grouped[field]) {
+      const eintrag = grouped[field][gericht];
       const row = document.createElement("tr");
-      row.innerHTML = `<td>${gericht}</td><td>${anzahl}</td>`;
+      row.innerHTML = `
+        <td>${gericht}</td>
+        <td>${eintrag.count}</td>
+        <td>${eintrag.zusatz.length ? eintrag.zusatz.join("<br>") : ""}</td>
+      `;
       tbody.appendChild(row);
-      sum += anzahl;
-    });
-
-    // ➕ Summenzeile
-    const sumRow = document.createElement("tr");
-    sumRow.style.backgroundColor = "#eaeaea";
-    sumRow.style.fontWeight = "bold";
-    sumRow.style.fontSize = "1.05rem";
-    sumRow.innerHTML = `<td>Gesamt</td><td>${sum}</td>`;
-    tbody.appendChild(sumRow);
+    }
 
     table.appendChild(tbody);
+    const caption = document.createElement("caption");
+    caption.textContent = title;
+    table.insertBefore(caption, thead);
+
     const wrapper = document.createElement("div");
     wrapper.className = "table-wrapper";
     wrapper.appendChild(table);
-    return wrapper;
-
-  }
-  // 🥗 Vorspeise gesamt
-  const starterTable = document.createElement("table");
-  starterTable.classList.add("starter-table");
-
-  const starterCaption = document.createElement("caption");
-  starterCaption.textContent = "🥗 Vorspeisen";
-  starterTable.appendChild(starterCaption);
-
-  const theadStarter = document.createElement("thead");
-  theadStarter.innerHTML = "<tr><th>Gericht</th><th>Anzahl</th></tr>";
-  starterTable.appendChild(theadStarter);
-
-  const tbodyStarter = document.createElement("tbody");
-  const starterRow = document.createElement("tr");
-  starterRow.innerHTML = `<td>Antipasti mit Quiche</td><td>${data.length}</td>`;
-  tbodyStarter.appendChild(starterRow);
-  starterTable.appendChild(tbodyStarter);
-
-  const starterWrapper = document.createElement("div");
-    starterWrapper.className = "table-wrapper";
-    starterWrapper.appendChild(starterTable);
-    section.appendChild(starterWrapper);
-
-
-
-  // Hauptgänge-Tabelle
-  section.appendChild(createMealTable("🥘 Hauptgänge", mainDishes));
-
-  // Dessert-Tabelle
-  section.appendChild(createMealTable("🍰 Desserts", desserts));
+    section.appendChild(wrapper);
+  });
 
   container.appendChild(section);
 }
+
 
 
 
