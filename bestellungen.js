@@ -205,12 +205,24 @@ function makeTableBlock(title, groupedData, field) {
   for (const tisch of sortedKeys) {
     const group = groupedData[tisch];
 
-    // Zähle Gerichte
-    const dishCounts = {};
+    // Zähle Gerichte + sammle Zusatzinfos
+    const dishData = {};
+
     group.forEach(entry => {
       const gericht = entry[field];
-      if (gericht) {
-        dishCounts[gericht] = (dishCounts[gericht] || 0) + 1;
+      if (!gericht) return;
+
+      if (!dishData[gericht]) {
+        dishData[gericht] = {
+          count: 0,
+          notes: []
+        };
+      }
+
+      dishData[gericht].count += 1;
+
+      if (entry.zusatz) {
+        dishData[gericht].notes.push(`1x ${entry.zusatz}`);
       }
     });
 
@@ -221,20 +233,24 @@ function makeTableBlock(title, groupedData, field) {
     table.appendChild(caption);
 
     const thead = document.createElement("thead");
-    thead.innerHTML = `<tr><th>Gericht</th><th>Anzahl</th></tr>`;
+    thead.innerHTML = `<tr><th>Gericht</th><th>Anzahl</th><th>Zusatzinfos</th></tr>`;
     table.appendChild(thead);
 
     const tbody = document.createElement("tbody");
 
-    for (const gericht in dishCounts) {
+    for (const gericht in dishData) {
+      const { count, notes } = dishData[gericht];
       const row = document.createElement("tr");
-      row.innerHTML = `<td>${gericht}</td><td>${dishCounts[gericht]}</td>`;
+      row.innerHTML = `
+        <td>${gericht}</td>
+        <td>${count}</td>
+        <td>${notes.length > 0 ? notes.join("<br>") : ""}</td>
+      `;
       tbody.appendChild(row);
     }
 
     table.appendChild(tbody);
 
-    // Tabelle einbetten
     const wrapper = document.createElement("div");
     wrapper.className = "table-wrapper";
     wrapper.appendChild(table);
