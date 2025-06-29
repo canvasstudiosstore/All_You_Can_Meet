@@ -164,7 +164,9 @@ document.getElementById("mealForm").addEventListener("submit", async function (e
   formData.append("vorname", currentPerson.vorname);
   formData.append("main", document.getElementById("main").value);
   formData.append("dessert", document.getElementById("dessert").value);
-  formData.append("zusatz", document.getElementById("zusatz").value);
+  formData.append("zusatzMain", document.getElementById("zusatzMain").value);
+  formData.append("zusatzDessert", document.getElementById("zusatzDessert").value);
+
   formData.append("action", mealExists ? "update" : "submit");
 
   const submitBtn = this.querySelector('button[type="submit"]');

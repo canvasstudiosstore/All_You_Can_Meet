@@ -44,11 +44,22 @@ async function fetchOrders() {
       const tisch2 = row.c[3]?.v || "";
       const dessert = row.c[4]?.v || "";
       const tisch3 = row.c[5]?.v || "";
-      const zusatz = row.c[6]?.v || "";
+      const zusatzHauptgang = row.c[6]?.v || "";
+        const zusatzDessert = row.c[7]?.v || "";
 
       // Nur hinzufügen, wenn entweder Vorname oder Nachname vorhanden ist
       if (name || vorname) {
-        orders.push({ name, vorname, hauptgang, tisch2, dessert, tisch3, zusatz });
+        orders.push({
+        name,
+        vorname,
+        hauptgang,
+        tisch2,
+        dessert,
+        tisch3,
+        zusatzHauptgang,
+        zusatzDessert
+        });
+
       }
     }
 
@@ -221,9 +232,11 @@ function makeTableBlock(title, groupedData, field) {
 
       dishData[gericht].count += 1;
 
-      if (entry.zusatz) {
-        dishData[gericht].notes.push(`1x ${entry.zusatz}`);
-      }
+      const zusatztext = field === "hauptgang" ? entry.zusatzHauptgang : entry.zusatzDessert;
+        if (zusatztext) {
+        dishData[gericht].notes.push(`1x ${zusatztext}`);
+        }       
+
     });
 
     // Tabelle erstellen
