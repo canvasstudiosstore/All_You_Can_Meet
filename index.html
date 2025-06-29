@@ -212,22 +212,27 @@ label.required::after {
     <p><strong>🥗 Vorspeise (wird serviert):</strong> Antipasti von gegrilltem Gemüse mit Quiche der Saison</p>
 
     <label for="main" class="required"><strong>🍝 Hauptgang</strong></label>
-    <select id="main" name="main" required>
-      <option value="">Bitte wählen</option>
-      <option value="Schwein">Medaillons vom Schwein mit Honigsenf</option>
-      <option value="Lachs">Linguine mit Lachs in Parmesan-Sauce</option>
-      <option value="Vegetarisch">Orientalisches Gemüseragout</option>
-    </select>
+<select id="main" name="main" required>
+  <option value="">Bitte wählen</option>
+  <option value="Schwein">Medaillons vom Schwein mit Honigsenf</option>
+  <option value="Lachs">Linguine mit Lachs in Parmesan-Sauce</option>
+  <option value="Vegetarisch">Orientalisches Gemüseragout</option>
+</select>
 
-    <label for="dessert" class="required"><strong>🍰 Dessert</strong></label>
-    <select id="dessert" name="dessert" required>
-      <option value="">Bitte wählen</option>
-      <option value="Creme Brulee">Crème Brûlée mit Erdbeer-Gel</option>
-      <option value="Käse">Französische Rohmilchkäseauswahl</option>
-    </select>
+<label for="zusatzHauptgang">Zusatzwunsch Hauptgang (optional)</label>
+<textarea id="zusatzHauptgang" name="zusatzHauptgang" placeholder="z. B. ohne Sauce, keine Zwiebeln"></textarea>
 
-    <label for="zusatz">Zusatzwünsche / Hinweise (optional)</label>
-    <textarea id="zusatz" name="zusatz" placeholder="z. B. Allergien, Abweichungen..."></textarea>
+<label for="dessert" class="required"><strong>🍰 Dessert</strong></label>
+<select id="dessert" name="dessert" required>
+  <option value="">Bitte wählen</option>
+  <option value="Creme Brulee">Crème Brûlée mit Erdbeer-Gel</option>
+  <option value="Käse">Französische Rohmilchkäseauswahl</option>
+</select>
+
+<label for="zusatzDessert">Zusatzwunsch Dessert (optional)</label>
+<textarea id="zusatzDessert" name="zusatzDessert" placeholder="z. B. ohne Sahne, laktosefrei"></textarea>
+
+
 
   <div class="button-row">
     <button type="submit" id="submitButton">Absenden</button>
