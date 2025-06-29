@@ -195,7 +195,7 @@ function makeTableBlock(title, groupedData, field) {
   heading.textContent = title;
   section.appendChild(heading);
 
-  // 🔢 Tischnamen sortieren nach Nummer (z. B. Tisch 1, Tisch 2, ...)
+  // 🔢 Tischnamen sortieren
   const sortedKeys = Object.keys(groupedData).sort((a, b) => {
     const numA = parseInt(a.replace(/\D/g, ""), 10);
     const numB = parseInt(b.replace(/\D/g, ""), 10);
@@ -205,33 +205,43 @@ function makeTableBlock(title, groupedData, field) {
   for (const tisch of sortedKeys) {
     const group = groupedData[tisch];
 
+    // Zähle Gerichte
+    const dishCounts = {};
+    group.forEach(entry => {
+      const gericht = entry[field];
+      if (gericht) {
+        dishCounts[gericht] = (dishCounts[gericht] || 0) + 1;
+      }
+    });
+
+    // Tabelle erstellen
     const table = document.createElement("table");
     const caption = document.createElement("caption");
     caption.textContent = tisch;
     table.appendChild(caption);
 
     const thead = document.createElement("thead");
-    thead.innerHTML = `<tr><th>Name</th><th>${field === "hauptgang" ? "Hauptgang" : "Dessert"}</th><th>Zusatz</th></tr>`;
+    thead.innerHTML = `<tr><th>Gericht</th><th>Anzahl</th></tr>`;
     table.appendChild(thead);
 
     const tbody = document.createElement("tbody");
-    group.forEach(entry => {
+
+    for (const gericht in dishCounts) {
       const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${entry.vorname} ${entry.name}</td>
-        <td>${entry[field]}</td>
-        <td>${entry.zusatz || ""}</td>
-      `;
+      row.innerHTML = `<td>${gericht}</td><td>${dishCounts[gericht]}</td>`;
       tbody.appendChild(row);
-    });
+    }
+
     table.appendChild(tbody);
+
+    // Tabelle einbetten
     const wrapper = document.createElement("div");
     wrapper.className = "table-wrapper";
     wrapper.appendChild(table);
     section.appendChild(wrapper);
-
   }
 
   return section;
 }
+
 
