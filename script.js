@@ -132,6 +132,7 @@ async function checkIfMealSubmitted(name, vorname) {
   }
   console.log(result);
 
+  
 }
 
 
