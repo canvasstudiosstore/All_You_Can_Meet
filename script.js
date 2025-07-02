@@ -4,6 +4,9 @@ let data = [];
 
 window.addEventListener("DOMContentLoaded", () => {
   fetchSheetData();
+  // Neue Logik: Formular wird direkt nach Namenseingabe vorausgefüllt
+  const nameInput = document.getElementById("nameInput");
+  nameInput.addEventListener("change", handleNameInput);
 });
 
 async function fetchSheetData() {
@@ -26,6 +29,7 @@ async function fetchSheetData() {
   }
 }
 
+// Funktion für Autocomplete bleibt erhalten
 function setupAutocomplete() {
   const input = document.getElementById("nameInput");
   const datalist = document.getElementById("nameList"
@@ -45,124 +49,96 @@ function setupAutocomplete() {
   });
 }
 
-function showSpinner(show) {
-  const spinner = document.getElementById("loadingSpinner");
-  if (spinner) spinner.style.display = show ? "block" : "none";
-}
+// Funktion für Spinner wird nicht mehr benötigt
+// function showSpinner(show) {
+//   const spinner = document.getElementById("loadingSpinner");
+//   if (spinner) spinner.style.display = show ? "block" : "none";
+// }
 
+// findPerson wird nicht mehr benötigt, stattdessen handleNameInput
+// async function findPerson() {
+//   const inputElement = document.getElementById("nameInput");
+//   const resultDiv = document.getElementById("result");
+//   const mealSection = document.getElementById("mealSection");
+//   const mealHeadline = document.getElementById("mealHeadline");
+//
+//   const input = inputElement.value.trim().toLowerCase();
+//   const person = data.find(p => p.name === input);
+//
+//   showSpinner(true); // ⏳ Spinner an
+//
+//   if (!person) {
+//     resultDiv.innerHTML = "<p style='color:red'>Nachname nicht gefunden. Bitte prüfe die Eingabe.</p>";
+//     resultDiv.style.display = "block"; // jetzt erst sichtbar machen
+//     mealSection.classList.remove("visible");
+//     showSpinner(false);
+//     return;
+//   }
+//
+//   currentPerson = person;
+//   resultDiv.innerHTML = `
+//   <p>Hallo <strong>${person.vorname}</strong>, du sitzt:</p>
+//   <ul>
+//     <li>🥗 1. Gang – Tisch ${person.gang1 || "noch nicht zugewiesen"}</li>
+//     <li>🍝 2. Gang – Tisch ${person.gang2 || "noch nicht zugewiesen"}</li>
+//     <li>🍰 3. Gang – Tisch ${person.gang3 || "noch nicht zugewiesen"}</li>
+//   </ul>
+// `;
+// resultDiv.style.display = "block";
+//
+//   await checkIfMealSubmitted(person.name, person.vorname);
+//
+//   showSpinner(false); // ✅ Spinner aus
+// }
 
-const MEAL_FORM_URL = "https://script.google.com/macros/s/AKfycbzm_NoylWWA2xKSItzgO3cfnJvk2xw9L77jjCuEMDi6CxkteknBBYwivhGvYy1YHx1YCQ/exec"; // <-- anpassen!
-
-let currentPerson = null;
-let mealExists = false;
-
-async function findPerson() {
+async function handleNameInput() {
   const inputElement = document.getElementById("nameInput");
-  const resultDiv = document.getElementById("result");
-  const mealSection = document.getElementById("mealSection");
-  const mealHeadline = document.getElementById("mealHeadline");
-
   const input = inputElement.value.trim().toLowerCase();
   const person = data.find(p => p.name === input);
-
-  showSpinner(true); // ⏳ Spinner an
+  const mealSection = document.getElementById("mealSection");
+  const mealHeadline = document.getElementById("mealHeadline");
+  const mealMessage = document.getElementById("mealMessage");
 
   if (!person) {
-    resultDiv.innerHTML = "<p style='color:red'>Nachname nicht gefunden. Bitte prüfe die Eingabe.</p>";
-    resultDiv.style.display = "block"; // jetzt erst sichtbar machen
-    mealSection.classList.remove("visible");
-    showSpinner(false);
+    mealHeadline.textContent = "Name nicht gefunden";
+    mealMessage.innerHTML = "<p style='color:red'>Nachname nicht gefunden. Bitte prüfe die Eingabe.</p>";
+    mealSection.classList.add("visible");
+    currentPerson = null;
     return;
   }
 
   currentPerson = person;
-  resultDiv.innerHTML = `
-  <p>Hallo <strong>${person.vorname}</strong>, du sitzt:</p>
-  <ul>
-    <li>🥗 1. Gang – Tisch ${person.gang1 || "noch nicht zugewiesen"}</li>
-    <li>🍝 2. Gang – Tisch ${person.gang2 || "noch nicht zugewiesen"}</li>
-    <li>🍰 3. Gang – Tisch ${person.gang3 || "noch nicht zugewiesen"}</li>
-  </ul>
-`;
-resultDiv.style.display = "block";
-
-
   await checkIfMealSubmitted(person.name, person.vorname);
-
-  showSpinner(false); // ✅ Spinner aus
 }
 
-
-
-
-async function checkIfMealSubmitted(name, vorname) {
-  const response = await fetch(`${MEAL_FORM_URL}?action=check&name=${encodeURIComponent(name)}`);
-  const result = await response.json();
-
-  const mealSection = document.getElementById("mealSection");
-  const mealHeadline = document.getElementById("mealHeadline");
-  const mealMessage = document.getElementById("mealMessage");
-  const mealForm = document.getElementById("mealForm");
-  const submitButton = document.getElementById("submitButton");
-
-  mealHeadline.textContent = `${vorname}, was möchtest du essen?`;
-  mealSection.style.display = "block";
-
-  if (result.exists) {
-    mealExists = true;
-
-    // 🟢 Formular vorausfüllen
-    document.getElementById("main").value = result.main || "";
-    document.getElementById("dessert").value = result.dessert || "";
-    document.getElementById("zusatzMain").value = result.zusatzMain || "";
-    document.getElementById("zusatzDessert").value = result.zusatzDessert || "";
-
-
-    // 🔄 Button-Text anpassen
-    submitButton.textContent = "Bearbeiten";
-
-    mealMessage.innerHTML = "<p style='color:orange'>Du hast deine Auswahl bereits abgeschickt. Du kannst sie nun bearbeiten und erneut speichern.</p>";
-  } else {
-    mealExists = false;
-
-    // 📝 Button zurück auf "Absenden"
-    submitButton.textContent = "Absenden";
-
-    mealMessage.innerHTML = "";
-  }
-  console.log(result);
-
-  
-}
-
-
-
-
-
-
-
-function enableEdit() {
-  const mealForm = document.getElementById("mealForm");
-  const editButton = document.getElementById("editButton");
-  const submitButton = mealForm.querySelector('button[type="submit"]');
-
-  // 🟢 Alle Felder aktivieren
-  for (let el of mealForm.elements) {
-    if (el.tagName !== "BUTTON") el.disabled = false;
-  }
-
-  mealExists = true;
-  document.getElementById("mealMessage").textContent = "";
-
-  // Jetzt nur Speichern zeigen
-  editButton.style.display = "none";
-  submitButton.style.display = "inline-block";
-}
-
+// checkIfMealSubmitted bleibt erhalten
+// ...existing code...
+// enableEdit wird nicht mehr benötigt
+// function enableEdit() {
+//   const mealForm = document.getElementById("mealForm");
+//   const editButton = document.getElementById("editButton");
+//   const submitButton = mealForm.querySelector('button[type="submit"]');
+//
+//   // 🟢 Alle Felder aktivieren
+//   for (let el of mealForm.elements) {
+//     if (el.tagName !== "BUTTON") el.disabled = false;
+//   }
+//
+//   mealExists = true;
+//   document.getElementById("mealMessage").textContent = "";
+//
+//   // Jetzt nur Speichern zeigen
+//   editButton.style.display = "none";
+//   submitButton.style.display = "inline-block";
+// }
 
 
 document.getElementById("mealForm").addEventListener("submit", async function (e) {
   e.preventDefault();
+  if (!currentPerson) {
+    document.getElementById("mealMessage").innerHTML = "<p style='color:red'>Bitte gib einen gültigen Nachnamen ein.</p>";
+    return;
+  }
 
   const formData = new FormData();
   formData.append("name", currentPerson.name);

@@ -196,17 +196,19 @@ label.required::after {
 <input list="nameList" id="nameInput" placeholder="Müller" />
 <datalist id="nameList"></datalist>
 <br />
-<button onclick="findPerson()">Anzeigen</button>
+<!-- <button onclick="findPerson()">Anzeigen</button> -->
 
-
+<!--
   <div id="result"></div>
+-->
 
+<!--
   <div id="loadingSpinner" style="display: none; text-align: center; margin-top: 2rem;">
-  <div class="spinner"></div>
-</div>
+    <div class="spinner"></div>
+  </div>
+-->
 
-
-  <div id="mealSection">
+  <div id="mealSection" class="visible">
   <h2 id="mealHeadline"></h2>
   <form id="mealForm">
     <p><strong>🥗 Vorspeise (wird serviert):</strong> Antipasti von gegrilltem Gemüse mit Quiche der Saison</p>
@@ -243,9 +245,8 @@ label.required::after {
   </form>
 </div>
 
-
   <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 3rem;">
-  <a href="bestellungen.html" class="feedback-link">Bestellungen</a>
+  <!-- <a href="bestellungen.html" class="feedback-link">Bestellungen</a> -->
   <a href="feedback.html" class="feedback-link">Feedback geben</a>
 </div>
 
