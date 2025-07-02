@@ -56,7 +56,7 @@ function findPerson() {
   const input = inputElement.value.trim().toLowerCase();
   const person = data.find(p => p.name === input);
 
-  showSpinner(true);
+  showSpinner(false);
 
   if (!person) {
     resultDiv.innerHTML = "<p style='color:red'>Nachname nicht gefunden. Bitte prüfe die Eingabe.</p>";
