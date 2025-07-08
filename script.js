@@ -79,7 +79,7 @@ function findPerson() {
   // checkIfMealSubmitted(person.name, person.vorname); // auskommentiert
 }
 
-/*
+
 const MEAL_FORM_URL = "https://script.google.com/macros/s/AKfycbzm_NoylWWA2xKSItzgO3cfnJvk2xw9L77jjCuEMDi6CxkteknBBYwivhGvYy1YHx1YCQ/exec";
 
 let currentPerson = null;
@@ -112,6 +112,7 @@ async function checkIfMealSubmitted(name, vorname) {
     mealMessage.innerHTML = "";
   }
 }
+
 
 function enableEdit() {
   const mealForm = document.getElementById("mealForm");
@@ -163,4 +164,4 @@ document.getElementById("mealForm").addEventListener("submit", async function (e
     submitBtn.textContent = mealExists ? "Bearbeiten" : "Absenden";
   }
 });
-*/
+
