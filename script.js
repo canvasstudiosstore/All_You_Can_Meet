@@ -72,6 +72,8 @@ async function findPerson() {
     return;
   }
 
+  currentPerson = person; // 🔧 Das hier fehlte!
+
   resultDiv.innerHTML = `
     <p>Hallo <strong>${person.vorname}</strong>, du sitzt:</p>
     <ul>
