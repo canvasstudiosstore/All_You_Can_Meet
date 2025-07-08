@@ -6,143 +6,173 @@
   <title>ALL YOU CAN MEET – Sitzplan</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0 auto;
-      padding: 2rem 1rem;
-      background: #f5f5f5;
-      color: #333;
-      max-width: 900px;
-      box-sizing: border-box;
-      line-height: 1.6;
-    }
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  background: #f5f5f5;
+  color: #333;
+  max-width: 900px;
+  box-sizing: border-box;
+  line-height: 1.6;
+}
 
-    h1, h2 {
-      text-align: center;
-      margin-bottom: 1rem;
-    }
+h1, h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
 
-    header {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      gap: 2rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-    }
+header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
 
-    .logo-block {
-      background: #000;
-      padding: 1rem;
-      border-radius: 8px;
-    }
+.logo-block {
+  background: #000;
+  padding: 1rem;
+  border-radius: 8px;
+}
 
-    .wj-logo {
-      height: 45px;
-      width: auto;
-    }
+.wj-logo {
+  height: 45px;
+  width: auto;
+}
 
-    .rohrmeisterei-logo {
-      height: 85px;
-      width: auto;
-    }
+.rohrmeisterei-logo {
+  height: 85px;
+  width: auto;
+}
 
-    .image-section {
-      margin-bottom: 2rem;
-    }
+.image-section {
+  margin-bottom: 2rem;
+}
 
-    .image-section img {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      display: block;
-      margin: 0 auto;
-    }
+.image-section img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: block;
+  margin: 0 auto;
+}
 
-    input, select, textarea, button {
-      padding: 0.8rem;
-      font-size: 1rem;
-      margin-top: 0.6rem;
-      margin-bottom: 1.2rem;
-      width: 100%;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
+input, select, textarea, button {
+  padding: 0.8rem;
+  font-size: 1rem;
+  margin-top: 0.6rem;
+  margin-bottom: 1.2rem;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
 
-    textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
 
-    button {
-      background: #0066cc;
-      color: white;
-      border: none;
-      cursor: pointer;
-      transition: background 0.2s ease;
-    }
+button {
+  background: #0066cc;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
 
-    button:hover {
-      background: #0053a6;
-    }
+button:hover {
+  background: #0053a6;
+}
 
-    #result {
-      display: none;
-      font-size: 1.1rem;
-      margin: 1.5rem 0;
-      background: #fff;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
+#result {
+  display: none; /* Nur sichtbar machen wenn Name gefunden wurde */
+  font-size: 1.1rem;
+  margin: 1.5rem 0;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
 
-    .feedback-link {
-      display: block;
-      margin: 3rem auto 0;
-      text-align: center;
-      font-size: 1rem;
-      background: #0066cc;
-      color: white;
-      padding: 0.75rem 1.5rem;
-      border-radius: 5px;
-      text-decoration: none;
-      width: fit-content;
-    }
 
-    footer {
-      margin-top: 3rem;
-      font-size: 0.85rem;
-      color: #888;
-      text-align: right;
-    }
 
-    label.required::after {
-      content: " *";
-      color: red;
-    }
+.feedback-link {
+  display: block;
+  margin: 3rem auto 0;
+  text-align: center;
+  font-size: 1rem;
+  background: #0066cc;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  text-decoration: none;
+  width: fit-content;
+}
 
-    @media (max-width: 600px) {
-      header {
-        flex-direction: column;
-      }
-    }
+footer {
+  margin-top: 3rem;
+  font-size: 0.85rem;
+  color: #888;
+  text-align: right;
+}
 
-    .spinner {
-      border: 6px solid #eee;
-      border-top: 6px solid #0066cc;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto;
-    }
+label.required::after {
+  content: " *";
+  color: red;
+}
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+#mealSection {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+#mealMessage {
+  font-weight: bold;
+}
+
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+  }
+}
+
+.spinner {
+  border: 6px solid #eee;
+  border-top: 6px solid #0066cc;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+  #mealSection {
+    display: none;
+    margin-top: 2rem;
+  }
+
+  #mealSection.visible {
+    display: block;
+  }
+
+.button-row {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
   </style>
 </head>
 <body>
@@ -162,28 +192,63 @@
   </section>
 
   <h1>Sitzplatz finden</h1>
-  <p>Gib deinen Nachnamen ein:</p>
-  <input list="nameList" id="nameInput" placeholder="Müller" />
-  <datalist id="nameList"></datalist>
-  <br />
-  <button onclick="findPerson()">Anzeigen</button>
+<p>Gib deinen Nachnamen ein:</p>
+<input list="nameList" id="nameInput" placeholder="Müller" />
+<datalist id="nameList"></datalist>
+<br />
+<button onclick="findPerson()">Anzeigen</button>
+
 
   <div id="result"></div>
 
-
   <div id="loadingSpinner" style="display: none; text-align: center; margin-top: 2rem;">
-    <div class="spinner"></div>
-  </div>
+  <div class="spinner"></div>
+</div>
+
 
   <div id="mealSection">
-    <h2 id="mealHeadline"></h2>
-    <form id="mealForm"> ... </form>
+  <h2 id="mealHeadline"></h2>
+  <form id="mealForm">
+    <p><strong>🥗 Vorspeise (wird serviert):</strong> Antipasti von gegrilltem Gemüse mit Quiche der Saison</p>
+
+    <label for="main" class="required"><strong>🍝 Hauptgang</strong></label>
+<select id="main" name="main" required>
+  <option value="">Bitte wählen</option>
+  <option value="Schwein">Medaillons vom Schwein mit Honigsenf</option>
+  <option value="Lachs">Linguine mit Lachs in Parmesan-Sauce</option>
+  <option value="Vegetarisch">Orientalisches Gemüseragout</option>
+</select>
+
+<label for="zusatzHauptgang">Zusatzwunsch Hauptgang (optional)</label>
+<textarea id="zusatzMain" name="zusatzMain" placeholder="z. B. ohne Sauce, keine Zwiebeln"></textarea>
+
+<label for="dessert" class="required"><strong>🍰 Dessert</strong></label>
+<select id="dessert" name="dessert" required>
+  <option value="">Bitte wählen</option>
+  <option value="Creme Brulee">Crème Brûlée mit Erdbeer-Gel</option>
+  <option value="Käse">Französische Rohmilchkäseauswahl</option>
+</select>
+
+<label for="zusatzDessert">Zusatzwunsch Dessert (optional)</label>
+<textarea id="zusatzDessert" name="zusatzDessert" placeholder="z. B. ohne Sahne, laktosefrei"></textarea>
+
+
+
+  <div class="button-row">
+    <button type="submit" id="submitButton">Absenden</button>
   </div>
+
+
+    <div id="mealMessage" style="margin-top: 1rem;"></div>
+  </form>
+</div>
+
 
   <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 3rem;">
   <a href="bestellungen.html" class="feedback-link">Bestellungen</a>
   <a href="feedback.html" class="feedback-link">Feedback geben</a>
 </div>
+
 
 
   <footer>
