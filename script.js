@@ -76,7 +76,7 @@ function findPerson() {
   resultDiv.style.display = "block";
   showSpinner(false);
 
-  // checkIfMealSubmitted(person.name, person.vorname); // auskommentiert
+  checkIfMealSubmitted(person.name, person.vorname);
 }
 
 
