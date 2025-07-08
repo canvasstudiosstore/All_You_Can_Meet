@@ -50,13 +50,20 @@ function showSpinner(show) {
   if (spinner) spinner.style.display = show ? "block" : "none";
 }
 
-function findPerson() {
+async function findPerson() {
   const inputElement = document.getElementById("nameInput");
   const resultDiv = document.getElementById("result");
   const input = inputElement.value.trim().toLowerCase();
-  const person = data.find(p => p.name === input);
 
-  showSpinner(false);
+  // Spinner AN
+  showSpinner(true);
+
+  // Result zurücksetzen
+  resultDiv.innerHTML = "";
+  resultDiv.style.display = "none";
+
+  // Person suchen
+  const person = data.find(p => p.name === input);
 
   if (!person) {
     resultDiv.innerHTML = "<p style='color:red'>Nachname nicht gefunden. Bitte prüfe die Eingabe.</p>";
@@ -74,10 +81,14 @@ function findPerson() {
     </ul>
   `;
   resultDiv.style.display = "block";
-  showSpinner(false);
 
-  checkIfMealSubmitted(person.name, person.vorname);
+  // Daten zur Essensabfrage laden
+  await checkIfMealSubmitted(person.name, person.vorname);
+
+  // Spinner AUS
+  showSpinner(false);
 }
+
 
 
 const MEAL_FORM_URL = "https://script.google.com/macros/s/AKfycbzm_NoylWWA2xKSItzgO3cfnJvk2xw9L77jjCuEMDi6CxkteknBBYwivhGvYy1YHx1YCQ/exec";
